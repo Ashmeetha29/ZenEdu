@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ZenEd – Study Companion</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#4F46E5',
+            secondary: '#FBBF24',
+          },
+        }
+      }
+    }
+  </script>
+</head>
+
+<body class="bg-gray-50 text-gray-800 font-sans">
+  <header class="bg-primary text-white p-6 shadow-md text-center">
+    <h1 class="text-3xl font-bold">ZEN – ZenEd</h1>
+    <p class="text-lg mt-1">Your Personalized Context-Aware Study Companion</p>
+  </header>
+
+  <main class="p-6 space-y-8 max-w-3xl mx-auto">
+
+    <!-- Summarizer -->
+    <section class="bg-white p-6 rounded-xl shadow">
+      <h2 class="text-xl font-semibold mb-3">📘 Topic-Aware Summarizer</h2>
+      <input type="file" id="upload" class="border p-2 rounded w-full mb-3">
+      <button onclick="generateSummary()" class="bg-primary text-white px-4 py-2 rounded hover:bg-indigo-700 transition">Generate Summary</button>
+      <div id="summaryResult" class="mt-4 text-gray-700"></div>
+    </section>
+
+    <!-- Doubt Assist -->
+    <section class="bg-white p-6 rounded-xl shadow">
+      <h2 class="text-xl font-semibold mb-3">❓ Doubt Assist</h2>
+      <textarea id="doubtInput" placeholder="Ask a question..." class="w-full p-3 border rounded resize-none"></textarea>
+      <button onclick="resolveDoubt()" class="bg-primary text-white mt-3 px-4 py-2 rounded hover:bg-indigo-700 transition">Get Explanation</button>
+      <div id="doubtAnswer" class="mt-4 text-gray-700"></div>
+    </section>
+
+    <!-- Quiz Generator -->
+    <section class="bg-white p-6 rounded-xl shadow">
+      <h2 class="text-xl font-semibold mb-3">🧠 Personalized Quiz Generator</h2>
+      <button onclick="generateQuiz()" class="bg-primary text-white px-4 py-2 rounded hover:bg-indigo-700 transition">Generate Quiz</button>
+      <div id="quizArea" class="mt-4 text-gray-700"></div>
+    </section>
+
+    <!-- Study Goals -->
+    <section class="bg-white p-6 rounded-xl shadow">
+      <h2 class="text-xl font-semibold mb-3">🎯 Study Goals & Timeboxing</h2>
+      <input type="text" id="goalInput" placeholder="e.g., Revise Operating Systems" class="w-full p-2 border rounded">
+      <button onclick="addGoal()" class="bg-primary text-white mt-3 px-4 py-2 rounded hover:bg-indigo-700 transition">Set Goal</button>
+      <ul id="goalList" class="list-disc pl-5 mt-3 text-gray-700"></ul>
+    </section>
+
+    <!-- Community Support -->
+    <section class="bg-white p-6 rounded-xl shadow">
+      <h2 class="text-xl font-semibold mb-3">🤝 Community Support</h2>
+      <textarea placeholder="Ask or answer a doubt anonymously..." class="w-full p-3 border rounded resize-none"></textarea>
+      <button class="bg-primary text-white mt-3 px-4 py-2 rounded hover:bg-indigo-700 transition">Post to Community</button>
+    </section>
+
+  </main>
+
+  <footer class="text-center text-sm p-4 bg-gray-200 mt-10">
+    © 2025 ZenEd – Built for students, by students.
+  </footer>
+
+  <script>
+    function generateSummary() {
+      const upload = document.getElementById('upload');
+      const summaryResult = document.getElementById('summaryResult');
+      if (!upload.files.length) {
+        summaryResult.innerHTML = '<p class="text-red-500">Please upload a file first.</p>';
+        return;
+      }
+      summaryResult.innerHTML = `
+        <ul class="list-disc pl-5">
+          <li><strong>Summary Point 1:</strong> Important terms detected from uploaded content.</li>
+          <li><strong>Summary Point 2:</strong> Key insights highlighted from data.</li>
+        </ul>
+      `;
+    }
+
+    function resolveDoubt() {
+      const doubt = document.getElementById('doubtInput').value.trim();
+      const output = document.getElementById('doubtAnswer');
+      if (!doubt) {
+        output.innerHTML = '<p class="text-red-500">Please enter a doubt to get an explanation.</p>';
+        return;
+      }
+      output.innerHTML = `<p><strong>Explanation:</strong> "${doubt}" is a basic concept that can be solved using logic or formula. Try breaking it down.</p>`;
+    }
+
+    function generateQuiz() {
+      const quiz = `
+        <p><strong>Q1:</strong> What is a CPU?</p>
+        <ul class="list-disc pl-5">
+          <li><input type="radio" name="q1"> A type of memory</li>
+          <li><input type="radio" name="q1"> A central processing unit</li>
+          <li><input type="radio" name="q1"> A hard disk</li>
+        </ul>
+        <p class="mt-3"><strong>Q2:</strong> What does HTML stand for?</p>
+        <ul class="list-disc pl-5">
+          <li><input type="radio" name="q2"> Hyperlink Markup Language</li>
+          <li><input type="radio" name="q2"> HyperText Markup Language</li>
+          <li><input type="radio" name="q2"> Home Tool Markup Language</li>
+        </ul>
+      `;
+      document.getElementById('quizArea').innerHTML = quiz;
+    }
+
+    function addGoal() {
+      const goalInput = document.getElementById('goalInput');
+      const goal = goalInput.value.trim();
+      const goalList = document.getElementById('goalList');
+
+      if (goal === "") {
+        alert("Please enter a study goal.");
+        return;
+      }
+
+      const li = document.createElement('li');
+      li.textContent = goal;
+      goalList.appendChild(li);
+      goalInput.value = '';
+    }
+  </script>
+</body>
+
+</html>
